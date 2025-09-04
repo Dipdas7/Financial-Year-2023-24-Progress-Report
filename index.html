@@ -1,296 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bharuch Kishan Agrofeed - FY 2023-24 Report</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2023-24 Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 font-sans">
-    <div class="container mx-auto px-4 py-8">
-        <header class="mb-8">
-            <h1 class="text-3xl font-bold text-center text-green-800">Bharuch Kishan Agrofeed Producer Company Limited</h1>
-            <h2 class="text-2xl text-center text-green-700">Financial Year 2023-24 Progress Report</h2>
-        </header>
+<body class="bg-gray-50 flex flex-col items-center p-4 space-y-6 min-h-screen">
 
-        <!-- Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Transaction Amount</h3>
-                <p class="text-3xl font-bold text-green-600">₹7,255,477</p>
-                <p class="text-sm text-gray-500 mt-1">April 2023 - March 2024</p>
-            </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Profit</h3>
-                <p class="text-3xl font-bold text-blue-600">₹1,050,720</p>
-                <p class="text-sm text-gray-500 mt-1">April 2023 - March 2024</p>
-            </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Turnover</h3>
-                <p class="text-3xl font-bold text-purple-600">₹3,672,063</p>
-                <p class="text-sm text-gray-500 mt-1">April 2023 - March 2024</p>
-            </div>
-        </div>
+  <!-- Heading -->
+  <header class="text-center">
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-800 tracking-wide">
+      BHARUCH KISAN AGROFED PRODUCER CO. LTD.
+    </h1>
+    <p class="text-gray-600 mt-1">Year: 2023 - 24</p>
+  </header>
 
-        <!-- Charts Section -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <!-- Monthly Sales Chart -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-green-700 mb-4">Monthly Sales Performance</h3>
-                <canvas id="salesChart" class="w-full h-64"></canvas>
-            </div>
-            
-            <!-- Product Distribution Chart -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-green-700 mb-4">Revenue by Product Category</h3>
-                <canvas id="productChart" class="w-full h-64"></canvas>
-            </div>
-        </div>
+  <!-- Chart -->
+  <div class="w-full max-w-3xl bg-white p-4 rounded-2xl shadow">
+    <canvas id="chart2023"></canvas>
+  </div>
 
-        <!-- Year Comparison -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
-            <div class="p-4 border-b bg-gray-50">
-                <h3 class="text-lg font-semibold text-green-700">Year-over-Year Comparison</h3>
-            </div>
-            <div class="p-4">
-                <canvas id="comparisonChart" class="w-full h-64"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Summary Data for 2023-24
-        const summaryData2024 = {
-            'Eucalyptus Plants': {
-                quantity: [6000, 0, 21900, 45840, 0, 35400, 26700, 13700, 31800, 2440, 23800, 1000],
-                amount: [28500, 0, 104025, 217740, 0, 168150, 126825, 65075, 151050, 11590, 113050, 4750],
-                turnover: [28500, 0, 104025, 217740, 0, 168150, 126825, 65075, 151050, 11590, 113050, 4750]
-            },
-            'Eucalyptus Harvest': {
-                quantity: [290.485, 0, 0, 0, 0, 0, 8, 47.5, 342.815, 705.95, 526.825, 208.345],
-                amount: [1614146, 0, 0, 0, 0, 0, 51308, 304641, 2198823, 4107583, 3192560, 1298500],
-                turnover: [1614146, 0, 0, 0, 0, 0, 51308, 304641, 911201, 1317200, 806255, 948551]
-            },
-            'Agro Waste': {
-                quantity: [40, 0, 104.5, 0, 207.46, 0, 0, 0, 77.09, 72.17, 0, 0],
-                amount: [24000, 0, 104500, 0, 207460, 0, 0, 0, 279016, 36085, 0, 0],
-                turnover: [24000, 0, 104500, 0, 207460, 0, 0, 0, 279016, 36085, 0, 0]
-            },
-            'Oil Cans': {
-                quantity: [75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                amount: [225000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                turnover: [225000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            },
-            'Kesar Keri': {
-                quantity: [0, 107, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                amount: [0, 53500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                turnover: [0, 53500, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-        };
-
-        // Data for 2022-23 (for comparison)
-        const summaryData2023 = {
-            'Eucalyptus Plants': {
-                quantity: 326890,
-                amount: 1552728,
-                turnover: 1552728
-            },
-            'Biocol': {
-                quantity: 33.69,
-                amount: 282954,
-                turnover: 282954
-            },
-            'Eucalyptus Harvest': {
-                quantity: 831.5,
-                amount: 4679139,
-                turnover: 1062537
-            },
-            'Agro Waste': {
-                quantity: 39,
-                amount: 23106,
-                turnover: 23106
-            },
-            'Oil Cans': {
-                quantity: 0,
-                amount: 0,
-                turnover: 0
-            },
-            'Kesar Keri': {
-                quantity: 0,
-                amount: 0,
-                turnover: 0
-            }
-        };
-
-        // Initialize Charts
-        function initializeCharts() {
-            // Monthly Sales Chart
-            const salesCtx = document.getElementById('salesChart').getContext('2d');
-            const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
-            
-            // Calculate monthly totals
-            const monthlyTotals = months.map((_, i) => {
-                return Object.keys(summaryData2024).reduce((total, product) => {
-                    return total + (summaryData2024[product].amount[i] || 0);
-                }, 0);
-            });
-            
-            new Chart(salesCtx, {
-                type: 'bar',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'Monthly Sales (₹)',
-                        data: monthlyTotals,
-                        backgroundColor: 'rgba(5, 150, 105, 0.7)',
-                        borderColor: 'rgba(5, 150, 105, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '₹' + value.toLocaleString();
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return 'Sales: ₹' + context.raw.toLocaleString();
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Product Distribution Chart
-            const productCtx = document.getElementById('productChart').getContext('2d');
-            const productLabels = Object.keys(summaryData2024);
-            const productData = productLabels.map(product => {
-                return summaryData2024[product].amount.reduce((a, b) => a + b, 0);
-            });
-            
-            new Chart(productCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: productLabels,
-                    datasets: [{
-                        data: productData,
-                        backgroundColor: [
-                            'rgba(5, 150, 105, 0.7)',
-                            'rgba(16, 185, 129, 0.7)',
-                            'rgba(22, 163, 74, 0.7)',
-                            'rgba(34, 197, 94, 0.7)',
-                            'rgba(101, 163, 13, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgba(5, 150, 105, 1)',
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(22, 163, 74, 1)',
-                            'rgba(34, 197, 94, 1)',
-                            'rgba(101, 163, 13, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'right',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const percentage = Math.round((value / total) * 100);
-                                    return `${label}: ₹${value.toLocaleString()} (${percentage}%)`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-            
-            // Year Comparison Chart
-            const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
-            const comparisonLabels = ['Eucalyptus Plants', 'Eucalyptus Harvest', 'Agro Waste', 'Oil Cans', 'Kesar Keri'];
-            
-            new Chart(comparisonCtx, {
-                type: 'bar',
-                data: {
-                    labels: comparisonLabels,
-                    datasets: [
-                        {
-                            label: '2022-23',
-                            data: [
-                                summaryData2023['Eucalyptus Plants'].amount,
-                                summaryData2023['Eucalyptus Harvest'].amount,
-                                summaryData2023['Agro Waste'].amount,
-                                summaryData2023['Oil Cans'].amount,
-                                summaryData2023['Kesar Keri'].amount
-                            ],
-                            backgroundColor: 'rgba(99, 102, 241, 0.7)',
-                            borderColor: 'rgba(99, 102, 241, 1)',
-                            borderWidth: 1
-                        },
-                        {
-                            label: '2023-24',
-                            data: [
-                                summaryData2024['Eucalyptus Plants'].amount.reduce((a, b) => a + b, 0),
-                                summaryData2024['Eucalyptus Harvest'].amount.reduce((a, b) => a + b, 0),
-                                summaryData2024['Agro Waste'].amount.reduce((a, b) => a + b, 0),
-                                summaryData2024['Oil Cans'].amount.reduce((a, b) => a + b, 0),
-                                summaryData2024['Kesar Keri'].amount.reduce((a, b) => a + b, 0)
-                            ],
-                            backgroundColor: 'rgba(5, 150, 105, 0.7)',
-                            borderColor: 'rgba(5, 150, 105, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '₹' + value.toLocaleString();
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.dataset.label}: ₹${context.raw.toLocaleString()}`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeCharts();
-        });
-    </script>
+  <script>
+    const ctx2023 = document.getElementById('chart2023').getContext('2d');
+    new Chart(ctx2023, {
+      type: 'line',
+      data: {
+        labels: ["April","May","June","July","August","September","October","November","December","January","February","March"],
+        datasets: [
+          {
+            label: "Total Work Amount",
+            data: [1891144,53500,208525,217740,207460,168150,178133,369716,2628921,4155740,3306016,1303301],
+            borderColor: "#2563eb",
+            backgroundColor: "rgba(37,99,235,0.2)",
+            fill: false,
+            tension: 0.3
+          },
+          {
+            label: "Profit",
+            data: [28977,7490,115450,22920,207460,0,508,3016,84732,49111,43510,13357],
+            borderColor: "#16a34a",
+            backgroundColor: "rgba(22,163,74,0.2)",
+            fill: false,
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'bottom' } }
+      }
+    });
+  </script>
 </body>
 </html>
